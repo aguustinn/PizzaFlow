@@ -8,6 +8,7 @@ app.use(cors()); // O Frontend vai bater aqui, então precisamos de CORS aqui
 
 // URL interna do Order Service (Configurada na Nuvem)
 const ORDER_SERVICE_URL = process.env.ORDER_URL || 'http://localhost:3001';
+const INVENTORY_SERVICE_URL = process.env.INVENTORY_URL || 'http://localhost:8080';
 
 // Rota interceptadora: Criar Pedido
 app.post('/api/orders', async (req, res) => {
@@ -39,4 +40,24 @@ app.get('/api/orders', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+
+app.get('/api/inventory', async (req, res) => {
+    try {
+        console.log('[API Gateway] Solicitando estoque ao Inventory Service (C#)...');
+        const response = await axios.get(`${INVENTORY_SERVICE_URL}/api/inventory`);
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: 'Serviço de estoque indisponível.' });
+    }
+});
+
+app.post('/api/inventory/consume', async (req, res) => {
+    try {
+        const response = await axios.post(`${INVENTORY_SERVICE_URL}/api/inventory/consume`, req.body);
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        res.status(error.response?.status || 500).json({ error: 'Erro ao consumir estoque.' });
+    }
+});
+
 app.listen(PORT, () => console.log(`🔏 API Gateway ativo na porta ${PORT}`));

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PizzaFlow - Sistema Distribuído</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans antialiased p-8">
+    <div id="app" class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold mb-8 text-center text-orange-500">🍕 PizzaFlow</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+                <h2 class="text-2xl font-semibold mb-4">Novo Pedido</h2>
+                <input v-model="customer" placeholder="Nome do Cliente" class="w-full p-3 mb-4 bg-gray-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                <select v-model="item" class="w-full p-3 mb-4 bg-gray-700 rounded text-white focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <option disabled value="">Selecione a Pizza</option>
+                    <option>Margherita Clássica</option>
+                    <option>Pepperoni Defumado</option>
+                    <option>Quatro Queijos</option>
+                </select>
+                <button @click="submitOrder" class="w-full bg-orange-600 hover:bg-orange-500 font-bold py-3 px-4 rounded transition-colors">
+                    Enviar Pedido
+                </button>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-700">
+                <h2 class="text-2xl font-semibold mb-4 flex justify-between items-center">
+                    Fila de Pedidos
+                    <button @click="fetchOrders" class="text-sm bg-gray-600 hover:bg-gray-500 px-3 py-1 rounded">Atualizar</button>
+                </h2>
+                <ul class="space-y-3">
+                    <li v-for="order in orders" :key="order.id" class="p-3 bg-gray-700 rounded flex justify-between items-center">
+                        <div>
+                            <span class="font-bold text-orange-400">#{{ order.id }}</span> - {{ order.customer }}
+                            <div class="text-sm text-gray-400">{{ order.item }}</div>
+                        </div>
+                        <span :class="{'text-yellow-400': order.status === 'Recebido', 'text-green-400': order.status === 'Pronto para Retirada'}" class="font-semibold text-sm">
+                            {{ order.status }}
+                        </span>
+                    </li>
+                    <li v-if="orders.length === 0" class="text-gray-400 text-center">Nenhum pedido na fila.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const { createApp } = Vue;
+
+        // ALERTA: Troque esta URL pela URL do Render após publicar o backend
+        const API_URL = 'http://localhost:3001/api/orders';
+
+        createApp({
+            data() {
+                return {
+                    customer: '',
+                    item: '',
+                    orders: []
+                }
+            },
+            methods: {
+                async submitOrder() {
+                    if (!this.customer || !this.item) return alert('Preencha todos os campos!');
+                    try {
+                        await fetch(API_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ customer: this.customer, item: this.item })
+                        });
+                        this.customer = '';
+                        this.item = '';
+                        this.fetchOrders();
+                    } catch (error) {
+                        alert('Erro ao conectar com o serviço de pedidos.');
+                    }
+                },
+                async fetchOrders() {
+                    try {
+                        const res = await fetch(API_URL);
+                        this.orders = await res.json();
+                    } catch (error) {
+                        console.error('Serviço offline');
+                    }
+                }
+            },
+            mounted() {
+                this.fetchOrders();
+                // Atualiza a tela a cada 3 segundos
+                setInterval(this.fetchOrders, 3000);
+            }
+        }).mount('#app');
+    </script>
+</body>
+</html>

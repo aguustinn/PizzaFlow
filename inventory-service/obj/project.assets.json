@@ -594,11 +594,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\agust\\Downloads\\PizzaFlow\\inventory-service\\inventory-service.csproj",
+      "projectUniqueName": "C:\\Users\\agust\\Documents\\3 SEMESTRE 2026\\Programação Distribuída\\PizzaFlow\\inventory-service\\inventory-service.csproj",
       "projectName": "inventory-service",
-      "projectPath": "C:\\Users\\agust\\Downloads\\PizzaFlow\\inventory-service\\inventory-service.csproj",
+      "projectPath": "C:\\Users\\agust\\Documents\\3 SEMESTRE 2026\\Programação Distribuída\\PizzaFlow\\inventory-service\\inventory-service.csproj",
       "packagesPath": "C:\\Users\\agust\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\agust\\Downloads\\PizzaFlow\\inventory-service\\obj\\",
+      "outputPath": "C:\\Users\\agust\\Documents\\3 SEMESTRE 2026\\Programação Distribuída\\PizzaFlow\\inventory-service\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

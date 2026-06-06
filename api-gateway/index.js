@@ -60,4 +60,13 @@ app.post('/api/inventory/consume', async (req, res) => {
     }
 });
 
+app.delete('/api/orders', async (req, res) => {
+    try {
+        const response = await axios.delete(`${ORDER_SERVICE_URL}/api/orders`);
+        res.status(response.status).json(response.data);
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao limpar pedidos.' });
+    }
+});
+
 app.listen(PORT, () => console.log(`🔏 API Gateway ativo na porta ${PORT}`));

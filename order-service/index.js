@@ -49,5 +49,11 @@ app.post('/api/orders/update', (req, res) => {
     res.sendStatus(200);
 });
 
+app.delete('/api/orders', (req, res) => {
+    orders = []; // Zera o array em memória
+    console.log('[Order Service] Banco de dados em memória limpo!');
+    res.status(200).json({ message: 'Todos os pedidos foram apagados.' });
+});
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`🍕 Order Service rodando na porta ${PORT}`));

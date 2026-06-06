@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bCXWLJCPkhA=",
+  "dgSpecHash": "c1Ut/SfcdWA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\agust\\Downloads\\PizzaFlow\\inventory-service\\inventory-service.csproj",
+  "projectFilePath": "C:\\Users\\agust\\Documents\\3 SEMESTRE 2026\\Programação Distribuída\\PizzaFlow\\inventory-service\\inventory-service.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\agust\\.nuget\\packages\\microsoft.entityframeworkcore\\8.0.0\\microsoft.entityframeworkcore.8.0.0.nupkg.sha512",
     "C:\\Users\\agust\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\8.0.0\\microsoft.entityframeworkcore.abstractions.8.0.0.nupkg.sha512",
